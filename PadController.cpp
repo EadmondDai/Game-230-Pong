@@ -5,7 +5,6 @@ int PadController::MovePad(float x, float y, int teamFlag)
 	if (teamFlag == 0)
 	{
 		float yOffset = GetYOffset(BluePad.GetY(), y);
-		printf("y %f  yOffset %f", y, yOffset);
 		BluePad.Move(x, yOffset);
 	}
 	else
@@ -23,9 +22,9 @@ float PadController::GetYOffset(float y, float moveY)
 	{
 		return y - 0;
 	}
-	else if (y + moveY > 600)
+	else if (y + moveY + PadHeight > 600)
 	{
-		return 600 - y;
+		return 600 - y - moveY - PadHeight;
 	}
 	else
 	{
@@ -49,6 +48,7 @@ PadController::PadController()
 	redShape.setFillColor(Color(255, 0, 0));
 	redShape.setOutlineColor(Color::Magenta);
 
+	PadHeight = BluePad.GetHeight();
 }
 
 

@@ -6,6 +6,8 @@ class PadController
 	Pad BluePad;
 	Pad RedPad;
 
+	float PadHeight;
+
 	float GetYOffset(float y, float moveY);
 
 public:

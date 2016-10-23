@@ -4,7 +4,7 @@
 int GamePlay::PlayGame()
 {
 
-	Clock clock;
+	
 	float deltaTime = clock.restart().asSeconds();
 
 	if (Keyboard::isKeyPressed(Keyboard::W))
@@ -16,6 +16,8 @@ int GamePlay::PlayGame()
 	{
 		MyController.MovePad(0, deltaTime * PadSpeed, 0);
 	}
+
+	MyBall.Move();
 
 	return 0;
 }

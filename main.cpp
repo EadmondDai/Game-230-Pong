@@ -66,6 +66,10 @@ int main()
 		window.draw(redShape);
 
 
+		CircleShape ball = newGame.GetBall().GetBallShape();
+		ball.setFillColor(Color::Magenta);
+		window.draw(ball);
+
 		window.display();
 
 		//newGame.Render(&window);

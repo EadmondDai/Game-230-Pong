@@ -22,11 +22,13 @@ private:
 
 	float ScoreEndTime;
 
-	float PadSpeed = 500000;
+	float PadSpeed = 200;
+
+	Clock clock;
 
 	PadController MyController;
 
-	Ball Ball;
+	Ball MyBall;
 
 public:
 	// Hanlde ball move and pad move.
@@ -39,6 +41,8 @@ public:
 	int Winning();
 
 	int GetGameState() { return GameState; };
+
+	Ball GetBall() { return MyBall; };
 
 	PadController GetPadController() { return MyController; };
 
