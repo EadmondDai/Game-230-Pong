@@ -2,8 +2,8 @@
 
 int Ball::SetDirection(float x, float y)
 {
-	X = x;
-	Y = y;
+	DirectionX = x;
+	DirectionY = y;
 	return 0;
 }
 
@@ -21,9 +21,9 @@ int Ball::AddSpeed(float speed)
 
 int Ball::Move()
 {
-	float directionSum = X + Y;
-	X = Speed / directionSum * X;
-	Y = Speed / directionSum * Y;
+	float directionSum = fabs(DirectionX) + fabs(DirectionY);
+	X += Speed / directionSum * DirectionX;
+	Y += Speed / directionSum * DirectionY;
 
 	BallShape.setPosition(X, Y);
 

@@ -41,38 +41,15 @@ int main()
 
 		// Related to render
 
-		window.clear();
-
-		Text hello;
-		Font font;
-		font.loadFromFile("Font/ITCBLKAD.TTF");
-		hello.setFont(font);
-		hello.setString("How you doing?");
-		hello.setCharacterSize(24);
-		hello.setColor(Color::Magenta);
-		hello.setPosition(400, 300);
-		window.draw(hello);
+		//window.clear();
 
 		PadController myController = newGame.GetPadController();
 
-		RectangleShape blueShape = myController.GetBlueShape();
-		blueShape.setFillColor(Color::Blue);
-
-		window.draw(blueShape);
-
-		RectangleShape redShape = myController.GetRedShape();
-		redShape.setFillColor(Color::Red);
-
-		window.draw(redShape);
 
 
-		CircleShape ball = newGame.GetBall().GetBallShape();
-		ball.setFillColor(Color::Magenta);
-		window.draw(ball);
+		//window.display();
 
-		window.display();
-
-		//newGame.Render(&window);
+		newGame.Render(&window);
 	}
 
 	return 0;

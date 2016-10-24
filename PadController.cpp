@@ -34,19 +34,15 @@ float PadController::GetYOffset(float y, float moveY)
 
 PadController::PadController()
 {
-	BluePad.SetPosition(10, 100);
+	BluePad.SetPosition(10, 280);
 	BluePad.SetSize(10, 70);
 	BluePad.SetTeamFlag(0);
 	RectangleShape blueShape = BluePad.GetShape();
-	blueShape.setFillColor(Color(0, 0, 255));
-	blueShape.setOutlineColor(Color::Cyan);
 
-	RedPad.SetPosition(780, 100);
+	RedPad.SetPosition(780, 280);
 	RedPad.SetSize(10, 70);
 	RedPad.SetTeamFlag(1);
 	RectangleShape redShape = RedPad.GetShape();
-	redShape.setFillColor(Color(255, 0, 0));
-	redShape.setOutlineColor(Color::Magenta);
 
 	PadHeight = BluePad.GetHeight();
 }

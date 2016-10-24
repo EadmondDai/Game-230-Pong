@@ -3,14 +3,18 @@
 #include <SFML/Main.hpp>
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
+#include <string>
 
 #include "PadController.h"
 #include "Ball.h"
 
 using namespace sf;
+using std::to_string;
 
 // This class will handle all the gamelogic. Check if winning.
 // This class will also handle all the rendering staff.
+// And this class will manage the score of two team.
+
 
 class GamePlay
 {
@@ -28,7 +32,26 @@ private:
 
 	PadController MyController;
 
+	// Ball speed.
+	float BallStartSpeed = 0.1;
+
+	float AddSpeed = 0.02;
+
+	// Related to score of each team.
+	Font ScoreFont;
+	int WinningScore = 5;
+	
+	Text BlueScoreTxt;
+	int BlueScore = 0;
+
+	Text RedScoreTxt;
+	int RedScore = 0;
+
 	Ball MyBall;
+
+	int CheckBallMove();
+
+	Vector2f GetBouncingDirection(float ballX, float ballY, float padX, float padY );
 
 public:
 	// Hanlde ball move and pad move.
@@ -41,6 +64,8 @@ public:
 	int Winning();
 
 	int GetGameState() { return GameState; };
+
+	int Render(RenderWindow *windowObj);
 
 	Ball GetBall() { return MyBall; };
 

@@ -1,4 +1,6 @@
 #pragma once
+#include <Math.h>
+
 #include <SFML/Main.hpp>
 #include <SFML/Graphics.hpp>
 
@@ -8,13 +10,17 @@ using namespace sf;
 class Ball
 {
 private:
-	float Speed = 1;
-	float X = 1;
-	float Y = 1;
+	float Speed = 0.1;
+
+	// The position is the topleft corner of the shape.
+	float X = 400;
+	float Y = 300;
 	float Radius = 10;
 
-	float DirectionX;
-	float DirectionY;
+	// Direction can not be zero. At least can not both be zero.
+	// The abs value of direction sum should always be 1.
+	float DirectionX = -1;
+	float DirectionY = 0;
 	
 	CircleShape BallShape;
 
@@ -22,7 +28,11 @@ public:
 	int SetDirection(float x, float y);
 	int AddSpeed(float speed);
 	int SetSpeed(float speed);
-	Vector2f GetDirection() { return Vector2f(X, Y); };
+	float GetPosX() { return X; };
+	float GetPosY() { return Y; };
+	float GetRadius() { return Radius; };
+
+	Vector2f GetDirection() { return Vector2f(DirectionX, DirectionY); };
 	CircleShape GetBallShape() { return BallShape; };
 	int Move();
 

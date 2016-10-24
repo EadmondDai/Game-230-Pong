@@ -12,6 +12,8 @@ class PadController
 
 public:
 
+	Pad GetBluePad() { return BluePad; };
+	Pad GetRedPad() { return RedPad; };
 	RectangleShape GetBlueShape() { return BluePad.GetShape(); };
 	RectangleShape GetRedShape() { return RedPad.GetShape(); };
 
