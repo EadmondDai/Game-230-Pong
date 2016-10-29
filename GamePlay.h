@@ -51,7 +51,8 @@ private:
 
 	int CheckBallMove();
 
-	Vector2f GetBouncingDirection(float ballX, float ballY, float padX, float padY );
+	// Use this direction when I am sure they collided.
+	Vector2f GetBouncingDirection(float ballX, float ballY, float ballPosY, float padPosX, float padPosY, float padWidth, float padHeight, float radius);
 
 public:
 	// Hanlde ball move and pad move.

@@ -1,5 +1,7 @@
 #include "GamePlay.h"
+#include <iostream>
 
+using namespace std;
 
 int GamePlay::PlayGame()
 {
@@ -29,6 +31,7 @@ int GamePlay::CheckBallMove()
 	float posX = MyBall.GetPosX();
 	float posY = MyBall.GetPosY();
 	float radius = MyBall.GetRadius();
+	Vector2f ballDirection = MyBall.GetDirection();
 
 	// If hit the upper and the lower wall, just bounce back.
 	Vector2f direction = MyBall.GetDirection();
@@ -51,15 +54,10 @@ int GamePlay::CheckBallMove()
 	float padWidth = bluePad.GetWidth();
 	float padHeight = bluePad.GetHeight();
 
-	if ((posX >= padPosX && posX <= padPosX + padWidth) && (posY + radius * 2 >= padPosY  && posY <= padPosY + padHeight))
+	if ((posX >= padPosX && posX <= padPosX + padWidth) && (posY + radius * 2 >= padPosY  && posY <= padPosY + padHeight) && direction.x < 0)
 	{
-		
-
-
-		if (direction.x < 0)
-		{
-			MyBall.SetDirection(-direction.x, direction.y);
-		}
+		Vector2f newDirection = GetBouncingDirection(ballDirection.x, ballDirection.y, posY, padPosX, padPosY, padWidth, padHeight, radius);
+		MyBall.SetDirection(newDirection.x, newDirection.y);
 		MyBall.AddSpeed(AddSpeed);
 	}
 
@@ -72,7 +70,8 @@ int GamePlay::CheckBallMove()
 
 	if ((posX + radius * 2 >= padPosXR && posX + radius * 2 <= padPosXR + padWidthR) && (posY + radius * 2 >= padPosYR  && posY <= padPosYR + padHeightR) && direction.x > 0)
 	{
-		MyBall.SetDirection(-direction.x, direction.y);
+		Vector2f newDirection = GetBouncingDirection(ballDirection.x, ballDirection.y, posY, padPosX, padPosY, padWidth, padHeight, radius);
+		MyBall.SetDirection(newDirection.x, newDirection.y);
 		MyBall.AddSpeed(AddSpeed);
 	}
 
@@ -82,9 +81,37 @@ int GamePlay::CheckBallMove()
 	return 0;
 }
 
-Vector2f GamePlay::GetBouncingDirection(float ballX, float ballY, float padX, float padY)
+Vector2f GamePlay::GetBouncingDirection(float ballX, float ballY, float ballPosY, float padPosX, float padPosY, float padWidth, float padHeight, float radius)
 {
+	// Check the directions of the ball and the pad.
+	// I need to change X direction, that's for sure.
+	float returnX;
+	float returnY;
+	Vector2f returnDirection;
 
+	// Since I deceteced they collided, so I only need to change X direction.
+	returnX = -ballX;
+
+	// Then get the Y direction according to the pad.
+	// I need to adjust the amount for Y turing.
+	if ((ballPosY + radius) < (padPosY + padHeight / 2))
+	{
+		returnY = ballY + (padPosY + radius - ballPosY - padHeight / 2) / padHeight * 2;
+	}
+	else if ((ballPosY + radius) > (padPosY + padHeight / 2))
+	{
+		returnY = ballY - (padPosY + radius - ballPosY - padHeight / 2) / padHeight * 2;
+	}
+
+	// And last, adding Y volecity to the ball.
+
+
+	// Need to normallize the direction.
+	float length = sqrtf(returnX * returnX + returnY * returnY);
+	returnDirection.x = returnX / length;
+	returnDirection.y = returnY / length;
+
+	return returnDirection;
 }
 
 int GamePlay::Score()
