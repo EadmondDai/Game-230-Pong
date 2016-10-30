@@ -13,8 +13,8 @@ private:
 	float Speed = 0.1;
 
 	// The position is the topleft corner of the shape.
-	float X = 400;
-	float Y = 300;
+	float X;
+	float Y;
 	float Radius = 10;
 
 	// Direction can not be zero. At least can not both be zero.
@@ -31,6 +31,8 @@ public:
 	float GetPosX() { return X; };
 	float GetPosY() { return Y; };
 	float GetRadius() { return Radius; };
+
+	void InitPos();
 
 	Vector2f GetDirection() { return Vector2f(DirectionX, DirectionY); };
 	CircleShape GetBallShape() { return BallShape; };

@@ -30,9 +30,16 @@ int Ball::Move()
 	return 0;
 }
 
+void Ball::InitPos()
+{
+	X = 400 - Radius;
+	Y = 300 - Radius;
+}
+
 Ball::Ball()
 {
 	BallShape.setRadius(Radius);
+	InitPos();
 }
 
 

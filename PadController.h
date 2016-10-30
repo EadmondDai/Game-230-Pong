@@ -10,6 +10,8 @@ class PadController
 
 	float GetYOffset(float y, float moveY);
 
+	
+
 public:
 
 	Pad GetBluePad() { return BluePad; };
@@ -18,6 +20,8 @@ public:
 	RectangleShape GetRedShape() { return RedPad.GetShape(); };
 
 	int MovePad(float x, float y, int teamFlag);
+
+	void InitPadsPos();
 
 	PadController();
 	~PadController();

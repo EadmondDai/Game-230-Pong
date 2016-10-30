@@ -1,5 +1,4 @@
 #include "GamePlay.h"
-#include <iostream>
 
 using namespace std;
 
@@ -17,6 +16,10 @@ int GamePlay::PlayGame()
 	{
 		MyController.MovePad(0, deltaTime * PadSpeed, 0);
 	}
+
+	// Get the ball location to AI and let AI do the movong.
+	// AI need two object. Ball and the pad.
+	AIPlayerObj.ChaseTheBall(&MyBall, &MyController.GetRedPad(), &MyController, deltaTime, PadSpeed);
 
 	CheckBallMove();
 
@@ -41,6 +44,7 @@ int GamePlay::CheckBallMove()
 		MyBall.SetDirection(direction.x, -direction.y);
 	}
 
+	
 	if (posY + MyBall.GetRadius() * 2 >= 600 && direction.y > 0)
 	{
 		MyBall.SetDirection(direction.x, -direction.y);
@@ -75,6 +79,42 @@ int GamePlay::CheckBallMove()
 		MyBall.AddSpeed(AddSpeed);
 	}
 
+	// Check if the ball is out of the left or right boundary.
+	if (posX + radius * 2 < 0)
+	{
+		RedScore++;
+		RedScoreTxt.setString(to_string(RedScore));
+		ScoreFlag = 1;
+
+		if (RedScore >= WinningScore)
+		{
+			GameState = 2;
+		}
+		else
+		{
+			ScoreEndTime = ClockObj.getElapsedTime().asMilliseconds() + ScoreTime;
+			GameState = 1;
+		}
+		return 0;
+	}
+
+	if (posX > 800)
+	{
+		BlueScore++;
+		BlueScoreTxt.setString(to_string(BlueScore));
+		ScoreFlag = 0;
+
+		if (BlueScore >= WinningScore)
+		{
+			GameState = 2;
+		}
+		else
+		{
+			ScoreEndTime = ClockObj.getElapsedTime().asMilliseconds() + ScoreTime;
+			GameState = 1;
+		}
+		return 0;
+	}
 
 	MyBall.Move();
 
@@ -116,11 +156,45 @@ Vector2f GamePlay::GetBouncingDirection(float ballX, float ballY, float ballPosY
 
 int GamePlay::Score()
 {
+	// Show something.
+	if (ScoreFlag == 0)
+	{
+		ScoreAndWinText.setString("Blue Team scored!");
+	}
+	else
+	{
+		ScoreAndWinText.setString("Red Team scored!");
+	}
+
+	// I should change gamestate back.
+	if (ScoreEndTime != 0 && ClockObj.getElapsedTime().asMilliseconds() >= ScoreEndTime)
+	{
+		ScoreEndTime = 0;
+		GameState = 0;
+
+		MyController.InitPadsPos();
+		MyBall.InitPos();
+
+		ScoreAndWinText.setString("");
+	}
+
 	return 0;
 }
 
 int GamePlay::Winning()
 {
+	// Show something.
+	if (ScoreFlag == 0)
+	{
+		ScoreAndWinText.setString("Blue Team Won!");
+	}
+	else
+	{
+		ScoreAndWinText.setString("Red Team Won!");
+	}
+
+	// I should change gamestate back here.
+
 	return 0;
 }
 
@@ -151,6 +225,11 @@ int GamePlay::Render(RenderWindow *windowObj)
 	ball.setFillColor(Color::Green);
 	windowObj->draw(ball);
 
+	// Show the words for congruatulate the scoring team.
+	if (GameState == 1 || GameState == 2)
+	{
+		windowObj->draw(ScoreAndWinText);
+	}
 
 	windowObj->display();
 
@@ -160,7 +239,8 @@ int GamePlay::Render(RenderWindow *windowObj)
 GamePlay::GamePlay()
 {
 	ScoreFont.loadFromFile("Font/HARLOWSI.TTF");
-	
+	ScoreAndWinFont.loadFromFile("Font/GIGI.TTF");
+
 	BlueScoreTxt.setCharacterSize(60);
 	BlueScoreTxt.setColor(Color::Cyan);
 	BlueScoreTxt.setPosition(175, 50);
@@ -173,6 +253,11 @@ GamePlay::GamePlay()
 	RedScoreTxt.setFont(ScoreFont);
 	RedScoreTxt.setString(to_string(RedScore));
 
+	ScoreAndWinText.setCharacterSize(90);
+	ScoreAndWinText.setColor(Color::White);
+	ScoreAndWinText.setPosition(400 - 300, 300 - 100);
+	ScoreAndWinText.setFont(ScoreAndWinFont);
+	
 	MyBall.SetSpeed(BallStartSpeed);
 }
 

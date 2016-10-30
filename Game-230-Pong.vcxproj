@@ -148,6 +148,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AIPlayer.h" />
     <ClInclude Include="Ball.h" />
     <ClInclude Include="GamePlay.h" />
     <ClInclude Include="Pad.h" />
@@ -158,6 +159,7 @@
     <ResourceCompile Include="Game-230-Pong.rc" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AIPlayer.cpp" />
     <ClCompile Include="Ball.cpp" />
     <ClCompile Include="GamePlay.cpp" />
     <ClCompile Include="main.cpp" />
