@@ -200,7 +200,19 @@ int GamePlay::Winning()
 		ScoreAndWinText.setString("Red Team Won!");
 	}
 
-	// I should change gamestate back here.
+	// I should change gamestate back here and init the game again.
+	if (Keyboard::isKeyPressed(Keyboard::Space))
+	{
+		BlueScore = 0;
+		RedScore = 0;
+		GameState = 0;
+
+		MyBall.InitPos();
+		MyController.InitPadsPos();
+	}
+
+	// Apity, I have to restart the clock here too.
+	clock.restart().asSeconds();
 
 	return 0;
 }
