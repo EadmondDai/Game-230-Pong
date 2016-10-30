@@ -60,7 +60,6 @@ int GamePlay::CheckBallMove()
 
 	if ((posX >= padPosX && posX <= padPosX + padWidth) && (posY + radius * 2 >= padPosY  && posY <= padPosY + padHeight) && direction.x < 0)
 	{
-		printf(" what the fuck?");
 		Vector2f newDirection = GetBouncingDirection(ballDirection.x, ballDirection.y, posY, padPosX, padPosY, padWidth, padHeight, radius);
 		MyBall.SetDirection(newDirection.x, newDirection.y);
 		MyBall.AddSpeed(AddSpeed);
@@ -182,6 +181,9 @@ int GamePlay::Score()
 
 		ScoreAndWinText.setString("");
 	}
+
+	// I need to restart time here, to prevent AIPlayer going wild.
+	clock.restart().asSeconds();
 
 	return 0;
 }
