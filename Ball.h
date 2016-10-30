@@ -19,7 +19,7 @@ private:
 
 	// Direction can not be zero. At least can not both be zero.
 	// The abs value of direction sum should always be 1.
-	float DirectionX = -1;
+	float DirectionX = 1;
 	float DirectionY = 0;
 	
 	CircleShape BallShape;

@@ -7,12 +7,16 @@ void Pad::Move(float x, float y)
 
 void Pad::SetPosition(float x, float y)
 {
+	if (TeamFLag == 1)
+	{
+		printf(" What the hack ? ");
+	}
+
+
 	X = x;
 	Y = y;
 
 	PadShape.setPosition(X, Y);
-
-	
 }
 
 void Pad::SetSize(float width, float height)

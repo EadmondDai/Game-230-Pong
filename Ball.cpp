@@ -34,6 +34,21 @@ void Ball::InitPos()
 {
 	X = 400 - Radius;
 	Y = 300 - Radius;
+
+	Speed = 0.1;
+
+	// Keep current X direction.
+	DirectionY = 0;
+
+	if (DirectionX > 0)
+	{
+		DirectionX = 1;
+	}
+	else
+	{
+		DirectionX = -1;
+	}
+
 }
 
 Ball::Ball()

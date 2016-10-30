@@ -60,6 +60,7 @@ int GamePlay::CheckBallMove()
 
 	if ((posX >= padPosX && posX <= padPosX + padWidth) && (posY + radius * 2 >= padPosY  && posY <= padPosY + padHeight) && direction.x < 0)
 	{
+		printf(" what the fuck?");
 		Vector2f newDirection = GetBouncingDirection(ballDirection.x, ballDirection.y, posY, padPosX, padPosY, padWidth, padHeight, radius);
 		MyBall.SetDirection(newDirection.x, newDirection.y);
 		MyBall.AddSpeed(AddSpeed);
@@ -72,9 +73,11 @@ int GamePlay::CheckBallMove()
 	float padWidthR = redPad.GetWidth();
 	float padHeightR = redPad.GetHeight();
 
+
+
 	if ((posX + radius * 2 >= padPosXR && posX + radius * 2 <= padPosXR + padWidthR) && (posY + radius * 2 >= padPosYR  && posY <= padPosYR + padHeightR) && direction.x > 0)
 	{
-		Vector2f newDirection = GetBouncingDirection(ballDirection.x, ballDirection.y, posY, padPosX, padPosY, padWidth, padHeight, radius);
+		Vector2f newDirection = GetBouncingDirection(ballDirection.x, ballDirection.y, posY, padPosXR, padPosYR, padWidthR, padHeightR, radius);
 		MyBall.SetDirection(newDirection.x, newDirection.y);
 		MyBall.AddSpeed(AddSpeed);
 	}
@@ -126,7 +129,7 @@ Vector2f GamePlay::GetBouncingDirection(float ballX, float ballY, float ballPosY
 	// Check the directions of the ball and the pad.
 	// I need to change X direction, that's for sure.
 	float returnX;
-	float returnY;
+	float returnY = 0;;
 	Vector2f returnDirection;
 
 	// Since I deceteced they collided, so I only need to change X direction.
@@ -136,20 +139,22 @@ Vector2f GamePlay::GetBouncingDirection(float ballX, float ballY, float ballPosY
 	// I need to adjust the amount for Y turing.
 	if ((ballPosY + radius) < (padPosY + padHeight / 2))
 	{
-		returnY = ballY + (padPosY + radius - ballPosY - padHeight / 2) / padHeight * 2;
+		returnY = ballY + (ballPosY + radius - padPosY - padHeight / 2) / padHeight * 2;
 	}
 	else if ((ballPosY + radius) > (padPosY + padHeight / 2))
 	{
-		returnY = ballY - (padPosY + radius - ballPosY - padHeight / 2) / padHeight * 2;
+		returnY = ballY + (ballPosY + radius - padPosY - padHeight / 2) / padHeight * 2;
 	}
 
 	// And last, adding Y volecity to the ball.
 
 
 	// Need to normallize the direction.
-	float length = sqrtf(returnX * returnX + returnY * returnY);
-	returnDirection.x = returnX / length;
-	returnDirection.y = returnY / length;
+	//float length = sqrtf(returnX * returnX + returnY * returnY);
+	//returnDirection.x = returnX / length;
+	//returnDirection.y = returnY / length;
+	returnDirection.x = returnX;
+	returnDirection.y = returnY;
 
 	return returnDirection;
 }
@@ -172,8 +177,8 @@ int GamePlay::Score()
 		ScoreEndTime = 0;
 		GameState = 0;
 
-		MyController.InitPadsPos();
 		MyBall.InitPos();
+		MyController.InitPadsPos();
 
 		ScoreAndWinText.setString("");
 	}
