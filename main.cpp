@@ -33,9 +33,13 @@ int main()
 		{
 			newGame.Score();
 		}
-		else // gameState == 2 winning
+		else if(gameState == 2) // gameState == 2 winning
 		{
 			newGame.Winning();
+		}
+		else {
+			newGame.ChooseMode(&window);
+			continue;
 		}
 
 		newGame.Render(&window);

@@ -22,6 +22,13 @@ class GamePlay
 {
 private:
 
+	// Gamemode 0 means man vs ai, 1 measn man vs man.
+	int GameMode = 0;
+
+	// Related to choose mode.
+	Font ModeChooseFont;
+	Text ModeChooseTxt;
+
 	// SoundManager.
 	SoundManager MySoundManager;
 
@@ -32,8 +39,8 @@ private:
 	// Related to time tracking.
 	Clock ClockObj;
 
-	// 0 means in game, 1 means scoring, 2 means winning.
-	int GameState = 0;
+	// 0 means in game, 1 means scoring, 2 means winning, 3 means chosing mode.
+	int GameState = 3;
 
 	float ScoreTime = 3000; // millisecond 
 
@@ -87,6 +94,9 @@ public:
 	
 	// Handle winning congratulation.
 	int Winning();
+
+	// Pop up button for choose modes.
+	int ChooseMode(RenderWindow *windobObj);
 
 	int GetGameState() { return GameState; };
 

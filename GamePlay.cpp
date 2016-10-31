@@ -19,7 +19,23 @@ int GamePlay::PlayGame()
 
 	// Get the ball location to AI and let AI do the movong.
 	// AI need two object. Ball and the pad.
-	AIPlayerObj.ChaseTheBall(&MyBall, &MyController.GetRedPad(), &MyController, deltaTime, PadSpeed);
+	if(GameMode == 1)
+	{
+		AIPlayerObj.ChaseTheBall(&MyBall, &MyController.GetRedPad(), &MyController, deltaTime, PadSpeed);
+	}
+	else if (GameMode == 0)
+	{
+		if (Keyboard::isKeyPressed(Keyboard::Up))
+		{
+			MyController.MovePad(0, -deltaTime * PadSpeed, 1);
+		}
+
+		if (Keyboard::isKeyPressed(Keyboard::Down))
+		{
+			MyController.MovePad(0, deltaTime * PadSpeed, 1);
+		}
+	}
+	
 
 	CheckBallMove();
 
@@ -224,7 +240,7 @@ int GamePlay::Winning()
 		BlueScoreTxt.setString(to_string(BlueScore));
 		RedScoreTxt.setString(to_string(RedScore));
 
-		GameState = 0;
+		GameState = 3;
 
 		MyBall.InitPos();
 		MyController.InitPadsPos();
@@ -232,6 +248,34 @@ int GamePlay::Winning()
 
 	// Apity, I have to restart the clock here too.
 	clock.restart().asSeconds();
+
+	return 0;
+}
+
+int GamePlay::ChooseMode(RenderWindow *windowObj)
+{
+	// This place handle all the mode choice.
+	ModeChooseTxt.setString("Before start the game, you can choose to play\n player vs player mode by pressing 'y', pressing\n 'n' will play on default mode.");
+
+	windowObj->clear();
+
+	windowObj->draw(ModeChooseTxt);
+
+	windowObj->display();
+
+	if (Keyboard::isKeyPressed(Keyboard::Y))
+	{
+		GameState = 0;
+		GameMode = 0;
+	}
+	else if (Keyboard::isKeyPressed(Keyboard::N))
+	{
+		GameState = 0;
+		GameMode = 1;
+	}
+
+	// In case the ai pad go wild.
+	clock.restart().asMilliseconds();
 
 	return 0;
 }
@@ -311,6 +355,12 @@ GamePlay::GamePlay()
 
 	// Start Background music.
 	MySoundManager.PlayBG();
+
+	// Related to choosing a play mode.
+	ModeChooseFont.loadFromFile("Font/GIGI.TTF");
+	ModeChooseTxt.setFont(ModeChooseFont);
+	ModeChooseTxt.setPosition(400 - 300, 300 - 100);
+	ModeChooseTxt.setColor(Color(8, 37, 103));
 }
 
 
