@@ -9,6 +9,7 @@
 #include "Ball.h"
 #include "AIPlayer.h"
 #include "SoundManager.h"
+#include "BlackHole.h"
 
 using namespace sf;
 using std::to_string;
@@ -21,6 +22,9 @@ using std::to_string;
 class GamePlay
 {
 private:
+
+	// BlackHole for the game.
+	BlackHole BHole;
 
 	// Gamemode 0 means man vs ai, 1 measn man vs man.
 	int GameMode = 0;
@@ -54,9 +58,9 @@ private:
 	PadController MyController;
 
 	// Ball speed.
-	float BallStartSpeed = 0.1;
+	float BallStartSpeed = 5;
 
-	float AddSpeed = 0.02;
+	float AddSpeed = 1;
 
 	// Related to score of each team.
 	Font ScoreFont;
@@ -84,6 +88,9 @@ private:
 
 	// Use this direction when I am sure they collided.
 	Vector2f GetBouncingDirection(float ballX, float ballY, float ballPosY, float padPosX, float padPosY, float padWidth, float padHeight, float radius);
+
+	// Drag to the black hole.
+	void DragToTheBlackhole(Ball &ballObj, BlackHole &blackholeObj, float deltaTime);
 
 public:
 	// Hanlde ball move and pad move.

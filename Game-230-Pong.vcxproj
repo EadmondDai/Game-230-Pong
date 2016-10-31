@@ -150,6 +150,7 @@
   <ItemGroup>
     <ClInclude Include="AIPlayer.h" />
     <ClInclude Include="Ball.h" />
+    <ClInclude Include="BlackHole.h" />
     <ClInclude Include="GamePlay.h" />
     <ClInclude Include="Pad.h" />
     <ClInclude Include="PadController.h" />
@@ -162,6 +163,7 @@
   <ItemGroup>
     <ClCompile Include="AIPlayer.cpp" />
     <ClCompile Include="Ball.cpp" />
+    <ClCompile Include="BlackHole.cpp" />
     <ClCompile Include="GamePlay.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Pad.cpp" />

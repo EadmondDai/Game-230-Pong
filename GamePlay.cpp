@@ -36,10 +36,56 @@ int GamePlay::PlayGame()
 		}
 	}
 	
-
 	CheckBallMove();
 
+	Vector2f ballDirection = MyBall.GetDirection();
+
+	//printf("%f, %f \n", ballDirection.x, ballDirection.y);
+
+	// After ball move, drag the ball to the black ball.
+
+	DragToTheBlackhole(MyBall, BHole, deltaTime);
+
 	return 0;
+}
+
+void GamePlay::DragToTheBlackhole(Ball &ballObj, BlackHole &blackholeObj, float deltaTime)
+{
+	float ballX = ballObj.GetPosX();
+	float ballY = ballObj.GetPosY();
+	float ballRadius = ballObj.GetRadius();
+	Vector2f ballDirection = ballObj.GetDirection();
+
+	float blackX = blackholeObj.GetPosX();
+	float blackY = blackholeObj.GetPosY();
+	float blackRadius = blackholeObj.GetRadius();
+	float gravity = blackholeObj.GetGravity();
+	float range = blackholeObj.GetRange();
+
+	// Only within the range will the blackhole take effect.
+	// Change the direction and the speed of the ball to mimic the black hole.
+	float diffX = blackX + blackRadius - ballX - ballRadius;
+	float diffY = blackY + blackRadius - ballY - ballRadius;
+
+	float distance = sqrtf(diffX * diffX + diffY * diffY);
+	
+	printf("distance and range and speed  %f, %f %f \n", distance, range, ballObj.GetSpeed());
+	if (distance < range)
+	{
+		float travelUnit = (1 - distance / range) * gravity;
+	
+		//float unitX = diffX * abs(diffX / distance) * travelUnit;
+		//float unitY = diffY * abs(diffY / distance) * travelUnit;
+
+		float directionX =  (diffX * abs(diffX)) / (distance * distance);
+		float directionY = (diffY * abs(diffY)) / (distance * distance);
+		float directionXUnit = directionX * (1 - distance / range);
+		float directionYUnit = directionY * (1 - distance / range);
+
+		ballObj.SetDirection(ballDirection.x + directionX * deltaTime, ballDirection.y + directionY * deltaTime);
+
+		//ballObj.MoveWithAPos(unitX, unitY);
+	}
 }
 
 int GamePlay::CheckBallMove()
@@ -93,8 +139,6 @@ int GamePlay::CheckBallMove()
 	float padPosYR = redPad.GetY();
 	float padWidthR = redPad.GetWidth();
 	float padHeightR = redPad.GetHeight();
-
-
 
 	if ((posX + radius * 2 >= padPosXR && posX + radius * 2 <= padPosXR + padWidthR) && (posY + radius * 2 >= padPosYR  && posY <= padPosYR + padHeightR) && direction.x > 0)
 	{
@@ -182,8 +226,8 @@ Vector2f GamePlay::GetBouncingDirection(float ballX, float ballY, float ballPosY
 
 	// Need to normallize the direction.
 	//float length = sqrtf(returnX * returnX + returnY * returnY);
-	//returnDirection.x = returnX / length;
-	//returnDirection.y = returnY / length;
+	//returnDirection.x = returnX * returnX / length * length;
+	//returnDirection.y = returnY * returnY / length * length;
 	returnDirection.x = returnX;
 	returnDirection.y = returnY;
 
@@ -287,6 +331,11 @@ int GamePlay::Render(RenderWindow *windowObj)
 	// Background sprite.
 	windowObj->draw(BGSprite);
 
+	// Black hole.
+	CircleShape blackHole = BHole.GetMyShape();
+	blackHole.setFillColor(Color::Black);
+	windowObj->draw(blackHole);
+
 	// This is the score of each team.
 	windowObj->draw(BlueScoreTxt);
 
@@ -361,6 +410,10 @@ GamePlay::GamePlay()
 	ModeChooseTxt.setFont(ModeChooseFont);
 	ModeChooseTxt.setPosition(400 - 300, 300 - 100);
 	ModeChooseTxt.setColor(Color(8, 37, 103));
+
+	// Set up blackhole.
+	BHole.SetPos(400, 300);
+
 }
 
 

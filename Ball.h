@@ -10,7 +10,7 @@ using namespace sf;
 class Ball
 {
 private:
-	float Speed = 0.1;
+	float Speed = 5;
 
 	// The position is the topleft corner of the shape.
 	float X;
@@ -28,14 +28,17 @@ public:
 	int SetDirection(float x, float y);
 	int AddSpeed(float speed);
 	int SetSpeed(float speed);
-	float GetPosX() { return X; };
-	float GetPosY() { return Y; };
-	float GetRadius() { return Radius; };
 
+	float GetSpeed() { return Speed; }
+	float GetPosX() { return X; }
+	float GetPosY() { return Y; }
+	float GetRadius() { return Radius; }
+	
 	void InitPos();
+	void MoveWithAPos(float x, float y);
 
-	Vector2f GetDirection() { return Vector2f(DirectionX, DirectionY); };
-	CircleShape GetBallShape() { return BallShape; };
+	Vector2f GetDirection() { return Vector2f(DirectionX, DirectionY); }
+	CircleShape GetBallShape() { return BallShape; }
 	int Move();
 
 	Ball();

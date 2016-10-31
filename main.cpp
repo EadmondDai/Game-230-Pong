@@ -7,9 +7,11 @@ using namespace sf;
 
 RenderWindow window(sf::VideoMode(800, 600), "Eadmond's Pong");
 
+
 int main()
 {
-	
+	window.setFramerateLimit(60);
+
 	//CircleShape shape(100.f);
 	//shape.setFillColor(Color::Green);
 

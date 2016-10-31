@@ -2,8 +2,12 @@
 
 int Ball::SetDirection(float x, float y)
 {
-	DirectionX = x;
-	DirectionY = y;
+	// Always normalise the direction.
+	float temp = x * x + y * y;
+
+	DirectionX = x * abs(x) / temp;
+	DirectionY = y * abs(y) / temp;
+
 	return 0;
 }
 
@@ -30,12 +34,18 @@ int Ball::Move()
 	return 0;
 }
 
+void Ball::MoveWithAPos(float x, float y)
+{
+	X += x;
+	Y += y;
+}
+
 void Ball::InitPos()
 {
 	X = 400 - Radius;
-	Y = 300 - Radius;
+	Y = 200 - Radius;
 
-	Speed = 0.1;
+	Speed = 5;
 
 	// Keep current X direction.
 	DirectionY = 0;
