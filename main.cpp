@@ -38,17 +38,6 @@ int main()
 			newGame.Winning();
 		}
 
-
-		// Related to render
-
-		//window.clear();
-
-		PadController myController = newGame.GetPadController();
-
-
-
-		//window.display();
-
 		newGame.Render(&window);
 	}
 

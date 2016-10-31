@@ -42,12 +42,16 @@ int GamePlay::CheckBallMove()
 	if (posY <= 0 && direction.y < 0)
 	{
 		MyBall.SetDirection(direction.x, -direction.y);
+
+		MySoundManager.PlayHitWall();
 	}
 
 	
 	if (posY + MyBall.GetRadius() * 2 >= 600 && direction.y > 0)
 	{
 		MyBall.SetDirection(direction.x, -direction.y);
+
+		MySoundManager.PlayHitWall();
 	}
 
 	// Check if hit the pad, and handle the rest.
@@ -63,6 +67,8 @@ int GamePlay::CheckBallMove()
 		Vector2f newDirection = GetBouncingDirection(ballDirection.x, ballDirection.y, posY, padPosX, padPosY, padWidth, padHeight, radius);
 		MyBall.SetDirection(newDirection.x, newDirection.y);
 		MyBall.AddSpeed(AddSpeed);
+
+		MySoundManager.PlayHitPad();
 	}
 
 	// Then the right pad.
@@ -79,6 +85,8 @@ int GamePlay::CheckBallMove()
 		Vector2f newDirection = GetBouncingDirection(ballDirection.x, ballDirection.y, posY, padPosXR, padPosYR, padWidthR, padHeightR, radius);
 		MyBall.SetDirection(newDirection.x, newDirection.y);
 		MyBall.AddSpeed(AddSpeed);
+
+		MySoundManager.PlayHitPad();
 	}
 
 	// Check if the ball is out of the left or right boundary.
@@ -91,11 +99,15 @@ int GamePlay::CheckBallMove()
 		if (RedScore >= WinningScore)
 		{
 			GameState = 2;
+
+			MySoundManager.PlayWin();
 		}
 		else
 		{
 			ScoreEndTime = ClockObj.getElapsedTime().asMilliseconds() + ScoreTime;
 			GameState = 1;
+
+			MySoundManager.PlayScore();
 		}
 		return 0;
 	}
@@ -109,11 +121,15 @@ int GamePlay::CheckBallMove()
 		if (BlueScore >= WinningScore)
 		{
 			GameState = 2;
+
+			MySoundManager.PlayWin();
 		}
 		else
 		{
 			ScoreEndTime = ClockObj.getElapsedTime().asMilliseconds() + ScoreTime;
 			GameState = 1;
+
+			MySoundManager.PlayScore();
 		}
 		return 0;
 	}
@@ -205,6 +221,9 @@ int GamePlay::Winning()
 	{
 		BlueScore = 0;
 		RedScore = 0;
+		BlueScoreTxt.setString(to_string(BlueScore));
+		RedScoreTxt.setString(to_string(RedScore));
+
 		GameState = 0;
 
 		MyBall.InitPos();
@@ -220,6 +239,9 @@ int GamePlay::Winning()
 int GamePlay::Render(RenderWindow *windowObj)
 {
 	windowObj->clear();
+
+	// Background sprite.
+	windowObj->draw(BGSprite);
 
 	// This is the score of each team.
 	windowObj->draw(BlueScoreTxt);
@@ -278,6 +300,17 @@ GamePlay::GamePlay()
 	ScoreAndWinText.setFont(ScoreAndWinFont);
 	
 	MyBall.SetSpeed(BallStartSpeed);
+
+	// Background
+	BGTexture.loadFromFile("Pic/background.jpg");
+	
+
+	BGSprite.setPosition(0, 0);
+	BGSprite.setTexture(BGTexture);
+	BGSprite.setScale(0.416, 0.555);
+
+	// Start Background music.
+	MySoundManager.PlayBG();
 }
 
 

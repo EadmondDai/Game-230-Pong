@@ -8,6 +8,7 @@
 #include "PadController.h"
 #include "Ball.h"
 #include "AIPlayer.h"
+#include "SoundManager.h"
 
 using namespace sf;
 using std::to_string;
@@ -20,6 +21,14 @@ using std::to_string;
 class GamePlay
 {
 private:
+
+	// SoundManager.
+	SoundManager MySoundManager;
+
+	// Background.
+	Sprite BGSprite;
+	Texture BGTexture;
+
 	// Related to time tracking.
 	Clock ClockObj;
 
