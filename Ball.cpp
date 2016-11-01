@@ -3,10 +3,13 @@
 int Ball::SetDirection(float x, float y)
 {
 	// Always normalise the direction.
-	float temp = x * x + y * y;
+	/*float temp = x * x + y * y;
 
 	DirectionX = x * abs(x) / temp;
-	DirectionY = y * abs(y) / temp;
+	DirectionY = y * abs(y) / temp;*/
+
+	DirectionX = x;
+	DirectionY = y;
 
 	return 0;
 }

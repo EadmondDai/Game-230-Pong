@@ -6,8 +6,8 @@ using namespace sf;
 class BlackHole
 {
 private:
-	float Range = 100;
-	float Gravity = 10;
+	float Range = 150;
+	float Gravity = 20;
 	float X = 0;
 	float Y = 0;
 	float ShapRadius = 20;

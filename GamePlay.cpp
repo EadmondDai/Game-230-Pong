@@ -38,7 +38,7 @@ int GamePlay::PlayGame()
 	
 	CheckBallMove();
 
-	Vector2f ballDirection = MyBall.GetDirection();
+	//Vector2f ballDirection = MyBall.GetDirection();
 
 	//printf("%f, %f \n", ballDirection.x, ballDirection.y);
 
@@ -64,12 +64,12 @@ void GamePlay::DragToTheBlackhole(Ball &ballObj, BlackHole &blackholeObj, float 
 
 	// Only within the range will the blackhole take effect.
 	// Change the direction and the speed of the ball to mimic the black hole.
-	float diffX = blackX + blackRadius - ballX - ballRadius;
-	float diffY = blackY + blackRadius - ballY - ballRadius;
+	float diffX = blackX - ballX - ballRadius;
+	float diffY = blackY - ballY - ballRadius;
 
 	float distance = sqrtf(diffX * diffX + diffY * diffY);
 	
-	printf("distance and range and speed  %f, %f %f \n", distance, range, ballObj.GetSpeed());
+	//printf("distance and range and speed  %f, %f %f \n", distance, range, ballObj.GetSpeed());
 	if (distance < range)
 	{
 		float travelUnit = (1 - distance / range) * gravity;
