@@ -35,12 +35,8 @@ int GamePlay::PlayGame()
 			MyController.MovePad(0, deltaTime * PadSpeed, 1);
 		}
 	}
-	
+
 	CheckBallMove();
-
-	//Vector2f ballDirection = MyBall.GetDirection();
-
-	//printf("%f, %f \n", ballDirection.x, ballDirection.y);
 
 	// After ball move, drag the ball to the black ball.
 
@@ -69,13 +65,9 @@ void GamePlay::DragToTheBlackhole(Ball &ballObj, BlackHole &blackholeObj, float 
 
 	float distance = sqrtf(diffX * diffX + diffY * diffY);
 	
-	//printf("distance and range and speed  %f, %f %f \n", distance, range, ballObj.GetSpeed());
 	if (distance < range)
 	{
 		float travelUnit = (1 - distance / range) * gravity;
-	
-		//float unitX = diffX * abs(diffX / distance) * travelUnit;
-		//float unitY = diffY * abs(diffY / distance) * travelUnit;
 
 		float directionX =  (diffX * abs(diffX)) / (distance * distance);
 		float directionY = (diffY * abs(diffY)) / (distance * distance);
@@ -83,8 +75,6 @@ void GamePlay::DragToTheBlackhole(Ball &ballObj, BlackHole &blackholeObj, float 
 		float directionYUnit = directionY * (1 - distance / range);
 
 		ballObj.SetDirection(ballDirection.x + directionX * deltaTime, ballDirection.y + directionY * deltaTime);
-
-		//ballObj.MoveWithAPos(unitX, unitY);
 	}
 }
 
@@ -97,6 +87,8 @@ int GamePlay::CheckBallMove()
 	float posY = MyBall.GetPosY();
 	float radius = MyBall.GetRadius();
 	Vector2f ballDirection = MyBall.GetDirection();
+
+	TestTrail.append(Vertex(Vector2f(posX + radius, posY + radius)));
 
 	// If hit the upper and the lower wall, just bounce back.
 	Vector2f direction = MyBall.GetDirection();
@@ -236,6 +228,7 @@ Vector2f GamePlay::GetBouncingDirection(float ballX, float ballY, float ballPosY
 
 int GamePlay::Score()
 {
+
 	// Show something.
 	if (ScoreFlag == 0)
 	{
@@ -266,6 +259,7 @@ int GamePlay::Score()
 
 int GamePlay::Winning()
 {
+
 	// Show something.
 	if (ScoreFlag == 0)
 	{
@@ -288,6 +282,8 @@ int GamePlay::Winning()
 
 		MyBall.InitPos();
 		MyController.InitPadsPos();
+
+		TestTrail.clear();
 	}
 
 	// Apity, I have to restart the clock here too.
@@ -330,6 +326,8 @@ int GamePlay::Render(RenderWindow *windowObj)
 
 	// Background sprite.
 	windowObj->draw(BGSprite);
+
+	windowObj->draw(TestTrail);
 
 	// Black hole.
 	CircleShape blackHole = BHole.GetMyShape();

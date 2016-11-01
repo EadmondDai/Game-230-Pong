@@ -23,6 +23,9 @@ class GamePlay
 {
 private:
 
+	// Text trai.
+	VertexArray TestTrail;
+
 	// BlackHole for the game.
 	BlackHole BHole;
 
