@@ -50,7 +50,7 @@ PadController::PadController()
 	RedPad.SetTeamFlag(1);
 	RectangleShape redShape = RedPad.GetShape();
 
-	//PadHeight = BluePad.GetHeight();
+	PadHeight = BluePad.GetHeight();
 }
 
 PadController::~PadController()
