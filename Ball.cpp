@@ -46,7 +46,16 @@ void Ball::MoveWithAPos(float x, float y)
 void Ball::InitPos()
 {
 	X = 400 - Radius;
-	Y = 200 - Radius;
+
+	if (IfSpawnTop)
+	{
+		Y = 200 - Radius;
+	}
+	else
+	{
+		Y = 400 - Radius;
+	}
+	IfSpawnTop = !IfSpawnTop;
 
 	Speed = 5;
 

@@ -10,6 +10,9 @@ using namespace sf;
 class Ball
 {
 private:
+	// Use to relocate the ball.
+	bool IfSpawnTop = true;
+
 	float Speed = 5;
 
 	// The position is the topleft corner of the shape.
